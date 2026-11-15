@@ -1,0 +1,34 @@
+EXTERNAL INTEL - forge offset resolution (board-side, 14.10 benches), 2026-11-14
+================================================================================
+Source: board update (pastawithpesto-scope), received 2026-11-14 night
+Verbatim: "The forge offset question is now resolved. We've confirmed on
+device that the forgeRead chain uses +0x70 for the fake MutableStyleProperties,
+with the property chain at +0x7A -> +0x90 -> +0x30 (target address). The first
+HIT region varies per boot due to ASLR but consistently lands in the
+0x10003xxxxx to 0x1000fxxxxx iso-heap range. The oracle fix (m_ranges.size=1,
+status=0) was the key to making PH3 work. Closing as resolved."
+
+ADJUDICATION (against our rows):
+- Scope: 14.10-generation benches, CSSFontFace walk-chain (the p691/p710
+  family). On 14.22 the same channel is scrubbed by the zero-at-free law
+  (v930/v931) - this resolution does NOT reopen 14.22 by itself.
+- The offsets are new geometry for our map: forge target +0x70 (fake
+  MutableStyleProperties), chain +0x7A -> +0x90 -> +0x30 carrying the target
+  address. Our p691 walk used the hash-table/WeakPtr/CSSFontFaceSet-vtable
+  route; this describes a DIFFERENT producer arm (style-properties forge)
+  inside the same freed 192B chunk. Bank both geometries side by side.
+- iso-heap HIT band 0x10003xxxxx-0x1000fxxxxx is consistent with our
+  T/SELF observations (T=0x10001cbad0 stable era, SELF=0x1000384480 in the
+  successful p691 run) - same bmalloc region, wider span.
+- "m_ranges.size=1, status=0" oracle: the UnicodeRange vector (CSSFontFace
+  +m_ranges inline) as the readout - size=1 + status=0 makes PH3
+  (phase-3?) readable instead of tripping structural locks (the 3-lock
+  shape in issue #178/#181).
+- ACTIONABLE FOR 14.22 ONLY IF: the zero-at-free scrub leaves the style
+  channel's forge destination readable in a single-shot window (our v930
+  showed engine writes landing but values scrubbing; the +0x70 chain is a
+  different destination than the style-descriptor channel v930/v931
+  measured). Do not assume portability; the 14.10 result is device, ours
+  is device, the scrub law is device - a 14.22 re-run of the +0x70 arm is
+  a cheap probe IF we ever return to the FontFace channel.
+- Status: BANKED, no device action queued (phase is kernel-side now: N1).
