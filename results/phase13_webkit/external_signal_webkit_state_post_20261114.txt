@@ -1,0 +1,31 @@
+EXTERNAL SIGNAL adjudication - X post on PS5 WebKit bug states by firmware, 2026-11-14
+================================================================================
+Claims vs our rows:
+1. "FontFace UAF still alive, needs real-hardware tests above 14.00" -
+   CORRECT and the best-supported claim. It IS our vector: device-confirmed
+   14.10 (p553->p691->p710 chain) and partially measured on 14.22 (trigger
+   fires, status-byte observable, zero-at-free on measured channels).
+   This console (14.22 retail) IS the testbed the post asks for.
+2. "Fixed: TransformStream type confusion, XML parser UAF, EventTarget UAF" -
+   GRADES MIXED:
+   - CVE-2026-43705 TransformStream: patched UPSTREAM (Safari 26.5.2, June
+     2026) but "Confirmed live on PS5 14.10" per the upstream repo, and our
+     cherry-pick cutoff law (26.3-in/26.4-out) predicts NOT patched on 14.22.
+     Its escalation is closed by the JS-builtin wall, but the bug itself is
+     likely still present in the firmware. "Fixed" is wrong for PS5.
+   - XMLParser UAF: DEAD BY PORT DESIGN (fragment-parsing guard, !m_parsingFragment
+     at :810; innerHTML cannot reach it; XHTML iframes dead) - DEAD_ENDS.md:149,
+     not "fixed".
+   - EventTarget UAF: DEAD BY PORT DESIGN (isJSExecutionForbidden() blocks
+     handler re-entry; V405 device-confirmed) - DEAD_ENDS.md:143, not "fixed".
+3. "CSS stack overflows + image decoder OOBs still present" - NO ROWS
+   anywhere citable; our v939-v948 measured image decoders hardened at first
+   order. Uncited rumor; zero weight until a named bug appears.
+4. "14.23 just released as security-only" - NEW, unverified by us (watcher
+   covers repos, not firmware). Consistent with maj0r's thread. If true and
+   FontFace survives it, the window narrows but stays; console stays on 14.22
+   regardless (blackhole law).
+5. "Stay on 14.22 or lower" - matches our standing practice.
+VERDICT: useful map, wrong grades on three bugs (one upstream-only fix, two
+   port-design deads); no mechanism offered for anything. No device action.
+Banked so nobody cites "XML/EventTarget fixed" on the board.
