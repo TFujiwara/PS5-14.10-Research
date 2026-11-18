@@ -48,3 +48,24 @@ UPDATE 2026-11-18: the 14.23 claim is now CONFIRMED BY OFFICIAL SOURCES.
   console - never on the testbed. The 14.23 presence-oracle battery
   (beginLayer/OffscreenCanvas/Wasm/WOFF2/loadingdone) remains queued for
   any future access to a 14.23 unit, never this one.
+
+CORRECTION 2026-11-18 (operator, confirmed by sources): the PSN block is
+GLOBAL, not game-tied. OneAngryGamer: 'blocking PSN access and online
+multiplayer until players install the patch'; Axeetech lists blocked PSN
+sign-in. Historical pattern: Sony already maintained a rolling PSN firmware
+minimum (14.00 -> 14.10 block, GBATemp) before this raise. The operator's
+original reading stands; my 'game-tied' reading was incomplete.
+OPERATIONAL CONSEQUENCES for the 14.22 testbed:
+- Store browsing/purchase/download and PSN sign-in are DEAD on this console
+  while on 14.22. Cloud saves, remote play sign-in, anything PSN: gone.
+- Everything LOCAL is unaffected: game launches of installed titles,
+  the Lua loader (if staged), TCP 9026 probes, N1, serve.py. Research
+  workflow does not need PSN.
+- serve.py blackhole blocks the UPDATE host, not PSN auth - the PSN refusal
+  is server-side and orthogonal to it. No accidental-update risk added.
+- The JP Hamidashi demo download (loader vehicle) REQUIRES PSN: if it was
+  not already downloaded before the block, it cannot be fetched on this
+  console now. Status must be checked on the console before any further
+  planning. If unstaged, the loader vehicle needs a non-PSN path (another
+  console, save-data import without PSN, or the bank's original staging
+  method records).
