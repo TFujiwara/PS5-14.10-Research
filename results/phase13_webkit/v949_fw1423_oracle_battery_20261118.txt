@@ -1,0 +1,29 @@
+V949 14.23 ROW - first-day presence-oracle battery: ZERO WebKit deltas from 14.22; firmware did not touch the browser surface
+================================================================================
+Date:    2026-11-18 (update installed same day)
+Log:     tools/browser_runner/beacon_logs/ (20:06 window)
+Firmware: PS5 26.07-14.23.00 (updated from 26.07-14.22.00 this session)
+Oracle-by-oracle vs the banked 14.22 answers:
+- O1 UA: "PlayStation 5/14.23" - version token ONLY. Same AppleWebKit/
+  605.1.15, same Version/17.0 Safari/605.1.15 => same engine build line.
+- O2 Wasm=undefined, SharedArrayBuffer=undefined, OffscreenCanvas=undefined,
+  TextDecoderStream=function, TransformStream=function - IDENTICAL to 14.22
+  (LLInt-only law HOLDS on 14.23; CVE-2026-43705 TransformStream still
+  present as API; no JIT returned).
+- O3 beginLayer=undefined, endLayer=undefined - CanvasLayersEnabled gate
+  still off (e0558372 lane stays closed).
+- O5 WOFF2 control (fonttools brotli): loaded - brotli/FreeType gate ON,
+  the v947/v948 lane remains ALIVE on 14.23.
+- O6 eager-realization law HOLDS (status=loaded right after ctx.font=).
+- O7 loadingdone still async (no in-window dispatch).
+READING: the 14.23 security patch (1.3 GB, one day after the 14.22 dump
+  claim) did not change ANY probed browser surface. Whatever it patched is
+  either below our oracle resolution (internal hardening), in a different
+  component (kernel? game pipeline?), or our oracle set missed it. All
+  14.22 laws (LLInt-only, eager realization, zero-at-free era posture,
+  WOFF2 support) CARRY to 14.23 by this measurement - no re-baseline
+  needed for the banked browser-side rows.
+Kernel-side vehicle queue unchanged: Hamidashi (PSN now live again) or
+  yarpe digital - operator's choice.
+GRADE:  M - 7/7 oracles identical; the firmware delta is not in the
+  browser at first oracle resolution.
