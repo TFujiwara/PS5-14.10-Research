@@ -29,3 +29,22 @@ Claims vs our rows:
 VERDICT: useful map, wrong grades on three bugs (one upstream-only fix, two
    port-design deads); no mechanism offered for anything. No device action.
 Banked so nobody cites "XML/EventTarget fixed" on the board.
+
+UPDATE 2026-11-18: the 14.23 claim is now CONFIRMED BY OFFICIAL SOURCES.
+- Sony support account (X): firmware 26.07-14.23.00 is REQUIRED to play
+  GTA VI; players must download before Nov 19 midnight (IGN ES, 18/11,
+  confirmed-by-Sony framing; Vandal 17/11 announced the patch as
+  security-only without the GTA tie-in - the two outlets disagree, IGN has
+  the primary source).
+- Reading: the 14.23 floor is GAME-TIED (GTA VI), not (yet) a global PSN
+  block. Research workflow on 14.22 (loader, local TCP probes, store
+  access already used) does not require GTA VI.
+- Context: 14.23 landed one day after a public 14.22 internal-file
+  extraction demo (per IGN) - Sony is patching in days, not months. The
+  14.22 window is actively hunted; treat this console's firmware as
+  irreplaceable.
+- OPERATING POLICY (unchanged, hardened): this console stays 14.22,
+  blackhole ON, auto-updates OFF. GTA VI, if desired, belongs on a second
+  console - never on the testbed. The 14.23 presence-oracle battery
+  (beginLayer/OffscreenCanvas/Wasm/WOFF2/loadingdone) remains queued for
+  any future access to a 14.23 unit, never this one.
