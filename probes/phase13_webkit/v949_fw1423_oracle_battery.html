@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8">
+<meta http-equiv="Cache-Control" content="no-cache,no-store,must-revalidate">
+<title>V949</title></head>
+<body><pre id="out">V949 - 14.23 presence-oracle battery: beginLayer/OffscreenCanvas/Wasm/loadingdone/WOFF2/eager-law/UA fingerprint</pre>
+<script>
+'use strict';
+var O=document.getElementById('out');
+function say(s){O.textContent+='\n'+s;}
+function bk(t,d){
+  try{var x=new XMLHttpRequest();x.open('GET','/beacon/V949-'+t+'?d='+encodeURIComponent(String(d===undefined?'':d).slice(0,700))+'&t='+Date.now(),false);x.send(null);}catch(e){}
+  O.textContent+='\n'+t+' '+(d===undefined?'':d);
+}
+
+/*
+ * 14.23 first-day measurement. Every beacon is a presence oracle whose
+ * 14.22 answer is banked; the diff IS the firmware delta:
+ *   O1 UA/WebKit version (p573 shape)
+ *   O2 Wasm = undefined? (LLInt-only law, v925)
+ *   O3 beginLayer/endLayer (CanvasLayersEnabled gate, v936: undefined)
+ *   O4 OffscreenCanvas (v936: absent; cobrajet [S]: PRIVATE OFF)
+ *   O5 WOFF2 supported? (v946: loaded - the v947/v948 lane reopens if yes)
+ *   O6 eager-realization law (v937: status=loaded right after ctx.font=)
+ *   O7 loadingdone dispatch timing (v936: async)
+ *   O8 loadingdone listener (for completeness with O7)
+ * Run AFTER the operator confirms PSN/store are back (serving without
+ * blackhole; store traffic flows via real DNS for non-hijacked hosts).
+ */
+
+bk('O1','UA='+navigator.userAgent);
+
+try{ bk('O2','Wasm='+typeof WebAssembly+' SharedArrayBuffer='+typeof SharedArrayBuffer+
+  ' OffscreenCanvas='+typeof OffscreenCanvas+' TextDecoderStream='+typeof TextDecoderStream+
+  ' TransformStream='+typeof TransformStream); }catch(e){ bk('O2-throw',String(e)); }
+
+try{
+  var c0=document.createElement('canvas').getContext('2d');
+  bk('O3','beginLayer='+typeof c0.beginLayer+' endLayer='+typeof c0.endLayer+
+    ' getContext2d='+(c0?'ok':'-'));
+}catch(e){ bk('O3-throw',String(e)); }
+
+/* O5: WOFF2 presence via known-good control (g01) */
+(function(){
+  var face=null;
+  try{
+    face=new FontFace('V9WO2',"url('/fuzzcases/fonts/g01_valid_woff2.woff2')");
+    face.loaded; document.fonts.add(face);
+  }catch(e){ bk('O5-ERR',String(e)); return; }
+  document.fonts.load('12px V9WO2','a').then(function(){
+    bk('O5','woff2 status='+face.status+' (loaded = brotli gate ON, v947/v948 lane alive)');
+  }).catch(function(){ bk('O5','woff2 status='+face.status); });
+})();
+
+/* O6: eager realization */
+try{
+  var f6=new FontFace('V9EAG',"local('Arial')"); f6.loaded;
+  document.fonts.add(f6);
+  var c6=document.createElement('canvas').getContext('2d');
+  c6.font='10px V9EAG';
+  bk('O6','eager: status right after ctx.font = '+f6.status+
+    (f6.status==='loaded'?' (law HOLDS)':' (LAW CHANGED)'));
+}catch(e){ bk('O6-throw',String(e)); }
+
+/* O7/O8: loadingdone sync or async */
+try{
+  var f7=new FontFace('V9LD',"local('Arial')"); f7.loaded;
+  document.fonts.add(f7);
+  var c7=document.createElement('canvas').getContext('2d');
+  var fired=0;
+  document.fonts.addEventListener('loadingdone',function(){ fired=1; });
+  c7.font='10px V9LD';
+  bk('O7','after font-set: loadingdone fired in-window = '+fired+
+    ' faceStatus='+f7.status+' (0 = async, 14.22 law)');
+}catch(e){ bk('O7-throw',String(e)); }
+
+bk('DONE','battery complete; O5 lands after this (async load)');
+</script></body></html>
