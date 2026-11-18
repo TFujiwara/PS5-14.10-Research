@@ -89,3 +89,18 @@ PRE-UPDATE CHECKLIST (before accepting 14.23):
 KERNEL-SIDE QUEUE (unchanged, vehicle now yarpe or re-staged Hamidashi):
   N1 (/mnt/sandbox/pfsmnt enumeration) runs first on whichever vehicle
   lands; then the standing syscall battery, re-baselined for 14.23.
+
+THREAD READ 2026-11-18 (awful/@itsawful911 disclosure thread): public
+summary of OUR board's chain - FontFace UAF -> VP leak -> KASLR defeat ->
+GOT.PLT -> RIP control (14.10), repo@ad1d6626, credits Ziggy/ng643/
+cobrajet302gt. New substantive commits verified in-tree:
+- 79a313c2 P700 module-base discovery probe (syscalls 592/593 -> libkernel_web
+  + libSceLibcInternal bases for ROP) - LUA probe, runs ON THE LOADER
+  VEHICLE; our 14.23 console becomes the first 14.23 tester for it once
+  the loader is staged.
+- c6d416fe + aa33a576: a full 14.22 KERNEL OFFSET TABLE was briefly pushed
+  then reverted for security => a decrypted 14.22 kernel dump EXISTS
+  somewhere private; nothing public yet.
+- Crowdsourcing testers 14.00-14.10 via Discord/hub - our console (14.23)
+  is outside that range for the browser-crowdsourcing, INSIDE the P700
+  kernel-side need once vehicle lands.
