@@ -69,3 +69,23 @@ OPERATIONAL CONSEQUENCES for the 14.22 testbed:
   planning. If unstaged, the loader vehicle needs a non-PSN path (another
   console, save-data import without PSN, or the bank's original staging
   method records).
+
+DECISION 2026-11-18 (operator): UPDATE THE TESTBED TO 14.23 and direct
+research there. Rationale: sole console, PSN block makes the 14.22 branch
+logistically dead (no store -> no loader vehicle -> no yarpe vehicle), the
+browser-side escalation was already closed (no address source), and yarpe
+claims latest-firmware support with digital purchases. The 14.22-era rows
+(v900-v948, p711-p718) remain the baseline for the 14.23 presence-oracle
+battery.
+PRE-UPDATE CHECKLIST (before accepting 14.23):
+1. serve.py OFF (blackhole would block the update download).
+2. Record firmware version before/after (Settings > System > Software).
+3. After update, verify: PSN sign-in returns, store reachable.
+14.23 PRESENCE-ORACLE BATTERY (queued, one load each, browser-side):
+  v936 shapes: beginLayer/endLayer (CanvasLayersEnabled?), OffscreenCanvas,
+  loadingdone timing; v925: Wasm undefined?; v946: WOFF2 supported?
+  v937: eager-realization law still holds? p711: Intl/ICU inventory.
+  Plus: UA string + WebKit version fingerprint (p573 shape).
+KERNEL-SIDE QUEUE (unchanged, vehicle now yarpe or re-staged Hamidashi):
+  N1 (/mnt/sandbox/pfsmnt enumeration) runs first on whichever vehicle
+  lands; then the standing syscall battery, re-baselined for 14.23.
