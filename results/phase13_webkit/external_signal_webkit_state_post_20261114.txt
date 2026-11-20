@@ -104,3 +104,18 @@ cobrajet302gt. New substantive commits verified in-tree:
 - Crowdsourcing testers 14.00-14.10 via Discord/hub - our console (14.23)
   is outside that range for the browser-crowdsourcing, INSIDE the P700
   kernel-side need once vehicle lands.
+
+REPO READ 2026-11-18 (ps5-payload-dev/wobkot fork of ufm42/wobkot, 110 stars):
+'Updated userland to use newer JSC bugs' - complete userland chain:
+lapse.js (psfree-lapse AIO family, FW<6) / relapse.js (ntfargo Relapse
+aio_multi_wait-timeout UAF, FW>=6 incl. all PS5) -> patch_proc (rootvnode
+swap, jail escape, dlsym) -> kexp.bin/elfldr.elf. NOT fontface-based.
+RELEVANCE CHECK for our 14.23 unit: relapse.js needs firmware-specific
+gadget/offset tables; repo carries none for 14.2x (original Relapse scope
+7.00-13.60). Entry still requires working browser exec. VERDICT: does not
+open our console; it is the post-exec userland the scene will likely
+attach to 14.2x offsets when they publish. Our kernel-side entry remains
+loader-vehicle (Hamidashi/yarpe). The lapse AIO-waiter UAF detail is
+notable against our own aio double-STATUS row: the real kernel race was
+the MWait-mutex free on timeout with pending request - a different bug
+than the one we falsified in the game-process context.
